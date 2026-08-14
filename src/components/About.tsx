@@ -5,7 +5,7 @@ export default function About() {
   return (
     <Section id="about" ghost="SKILLS" title="Skills" meta={`${skills.length} areas`}>
       <p className="mb-10 max-w-lg text-sm leading-relaxed text-muted">
-        Machine Learning Engineer focused on production AI systems that
+        AI/ML Engineer focused on production AI systems that
         eliminate manual effort — presales automation, agentic workflows, RAG
         architectures, and LLM fine-tuning, backed by an M.Sc. in Data
         Science and dual cloud certifications from Oracle and AWS.

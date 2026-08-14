@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "Ashok Kumar L — Machine Learning Engineer";
+const title = "Ashok Kumar L — AI/ML Engineer";
 const description =
-  "Machine Learning Engineer specialising in agentic AI, RAG systems, LLM fine-tuning, and production AI automation.";
+  "AI/ML Engineer specialising in agentic AI, RAG systems, LLM fine-tuning, and production AI automation.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ashok-kumar-l-portfolio.vercel.app"),

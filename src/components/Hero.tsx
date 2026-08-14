@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { profile } from "@/lib/data";
 
 const socials = [
@@ -18,12 +19,15 @@ export default function Hero() {
       </h1>
 
       <div className="mt-10 grid gap-10 sm:grid-cols-[auto_1fr_auto] sm:items-end">
-        <div
-          aria-hidden
-          className="flex h-28 w-28 shrink-0 items-center justify-center rounded-2xl bg-ink font-mono text-2xl font-semibold text-ink-foreground sm:h-32 sm:w-32"
-        >
-          {first[0]}
-          {last[0]}
+        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-2xl sm:h-32 sm:w-32">
+          <Image
+            src="/portrait.jpg"
+            alt={profile.name}
+            width={256}
+            height={256}
+            className="h-full w-full object-cover object-[50%_25%]"
+            priority
+          />
         </div>
 
         <div>

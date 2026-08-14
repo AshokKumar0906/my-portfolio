@@ -1,11 +1,11 @@
 export const profile = {
   name: "Ashok Kumar L",
-  title: "Machine Learning Engineer",
+  title: "AI/ML Engineer",
   location: "Chennai, India",
   email: "ashokkumar0906.ak@gmail.com",
   phone: "+91 99441 82706",
   summary:
-    "Machine Learning Engineer with 2+ years of experience building production-grade AI automation systems — including presales pipeline automation, autonomous agentic workflows, advanced RAG architectures, and LLM fine-tuning. Skilled across the full AI product lifecycle: system design, event-driven backend development, document intelligence, LLM orchestration, and containerised deployment.",
+    "AI/ML Engineer with 2+ years of experience building production-grade AI automation systems — including presales pipeline automation, autonomous agentic workflows, advanced RAG architectures, and LLM fine-tuning. Skilled across the full AI product lifecycle: system design, event-driven backend development, document intelligence, LLM orchestration, and containerised deployment.",
   links: {
     github: "https://github.com/AshokKumar0906",
     linkedin: "https://www.linkedin.com/in/ashok-kumar-l/",
