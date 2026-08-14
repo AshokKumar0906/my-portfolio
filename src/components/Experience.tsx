@@ -12,21 +12,16 @@ export default function Experience() {
     >
       <div className="divide-y divide-ink-foreground/10 border-t border-ink-foreground/10">
         {experience.map((job) => (
-          <details key={job.company} className="group py-6" open={job === experience[0]}>
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span className="text-ink-foreground/40 transition-transform group-open:rotate-45">
-                  +
-                </span>
-                <div>
-                  <p className="text-base font-semibold">{job.role}</p>
-                  <p className="text-sm text-ink-foreground/60">{job.company}</p>
-                </div>
+          <div key={job.company} className="py-6">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-base font-semibold">{job.role}</p>
+                <p className="text-sm text-ink-foreground/60">{job.company}</p>
               </div>
               <span className="shrink-0 font-mono text-xs text-ink-foreground/60">
                 {job.period}
               </span>
-            </summary>
+            </div>
             <ul className="mt-4 space-y-2">
               {job.bullets.map((bullet, i) => (
                 <li
@@ -37,7 +32,7 @@ export default function Experience() {
                 </li>
               ))}
             </ul>
-          </details>
+          </div>
         ))}
       </div>
     </Section>
