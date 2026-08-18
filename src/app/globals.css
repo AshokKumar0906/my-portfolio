@@ -47,8 +47,15 @@ body {
 }
 
 .text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--foreground);
+  color: var(--foreground);
+}
+
+@supports (-webkit-text-stroke: 1px black) or (text-stroke: 1px black) {
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--foreground);
+    text-stroke: 1.5px var(--foreground);
+  }
 }
 
 .ghost-label {

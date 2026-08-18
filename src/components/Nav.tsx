@@ -9,7 +9,7 @@ const links = [
 
 export default function Nav() {
   return (
-    <header className="sticky top-4 z-50 mx-auto flex max-w-4xl items-center justify-between gap-4 rounded-full border border-border bg-surface/90 px-4 py-2.5 shadow-sm backdrop-blur">
+    <header className="sticky top-4 z-50 mx-auto flex max-w-4xl items-center justify-between gap-4 rounded-full border border-border bg-surface/90 px-4 py-2.5 shadow-sm backdrop-blur lg:max-w-5xl xl:max-w-6xl">
       <a
         href="#top"
         className="flex items-center gap-2 rounded-full bg-background px-3 py-1.5 text-xs font-medium"

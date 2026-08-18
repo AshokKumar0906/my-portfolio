@@ -23,7 +23,7 @@ export default function Section({
         isDark ? "bg-ink text-ink-foreground" : ""
       }`}
     >
-      <div className="relative mx-auto max-w-4xl px-6">
+      <div className="relative mx-auto max-w-4xl px-6 lg:max-w-5xl xl:max-w-6xl">
         <span
           aria-hidden
           className={`pointer-events-none absolute -top-6 left-0 select-none text-[15vw] leading-none font-black tracking-tight sm:text-[7rem] ${

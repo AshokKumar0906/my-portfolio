@@ -3,7 +3,7 @@ import { profile } from "@/lib/data";
 export default function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto flex max-w-3xl flex-col items-center justify-between gap-4 px-6 py-8 text-xs text-muted sm:flex-row">
+      <div className="mx-auto flex max-w-3xl flex-col items-center justify-between gap-4 px-6 py-8 text-xs text-muted sm:flex-row lg:max-w-5xl xl:max-w-6xl">
         <span>© {new Date().getFullYear()} {profile.name}</span>
         <div className="flex gap-4">
           <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="hover:text-accent">

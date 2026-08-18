@@ -12,7 +12,7 @@ export default function Hero() {
   const last = rest.join(" ");
 
   return (
-    <section id="top" className="mx-auto max-w-4xl px-6 pb-8 pt-16 sm:pt-24">
+    <section id="top" className="mx-auto max-w-4xl px-6 pb-8 pt-16 sm:pt-24 lg:max-w-5xl xl:max-w-6xl">
       <h1 className="flex flex-wrap items-baseline gap-x-4 text-[13vw] font-black uppercase leading-[0.9] tracking-tight sm:text-[5.5rem]">
         <span className="text-outline">{first}</span>
         <span>{last}</span>
