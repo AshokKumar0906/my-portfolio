@@ -45,3 +45,6 @@ next-env.d.ts
 # local logs / stray media
 *.log
 *.mp4
+
+.vercel
+.env*
