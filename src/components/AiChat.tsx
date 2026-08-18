@@ -1,8 +1,13 @@
 "use client";
 
-import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import { profile } from "@/lib/data";
+
+type ChatMessage = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+};
 
 const suggestions = [
   "What's his experience with RAG?",
@@ -10,22 +15,88 @@ const suggestions = [
   "Is he open to new roles?",
 ];
 
+async function streamChatReply(
+  messages: ChatMessage[],
+  onDelta: (delta: string) => void,
+) {
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messages: messages.map(({ role, content }) => ({ role, content })),
+    }),
+  });
+
+  if (!response.body) throw new Error("No response body");
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const events = buffer.split("\n\n");
+    buffer = events.pop() ?? "";
+
+    for (const event of events) {
+      const line = event.trim();
+      if (!line.startsWith("data: ")) continue;
+      const payload = line.slice("data: ".length);
+      if (payload === "[DONE]") return;
+
+      const data = JSON.parse(payload) as { delta?: string; error?: string };
+      if (data.error) throw new Error(data.error);
+      if (data.delta) onDelta(data.delta);
+    }
+  }
+}
+
 export default function AiChat() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status } = useChat();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  }, [messages, status]);
+  }, [messages, isLoading]);
 
-  const isLoading = status === "submitted" || status === "streaming";
-
-  const ask = (text: string) => {
+  const ask = async (text: string) => {
     if (!text.trim() || isLoading) return;
-    sendMessage({ text });
+
+    const history = [
+      ...messages,
+      { id: crypto.randomUUID(), role: "user" as const, content: text },
+    ];
+    const replyId = crypto.randomUUID();
+
+    setMessages([...history, { id: replyId, role: "assistant", content: "" }]);
     setInput("");
+    setIsLoading(true);
+
+    try {
+      await streamChatReply(history, (delta) => {
+        setMessages((current) =>
+          current.map((m) =>
+            m.id === replyId ? { ...m, content: m.content + delta } : m,
+          ),
+        );
+      });
+    } catch {
+      setMessages((current) =>
+        current.map((m) =>
+          m.id === replyId
+            ? { ...m, content: "Sorry, something went wrong. Please try again." }
+            : m,
+        ),
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,30 +143,16 @@ export default function AiChat() {
                 className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
+                  className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
                     message.role === "user"
                       ? "bg-ink text-ink-foreground"
                       : "bg-background text-foreground"
                   }`}
                 >
-                  {message.parts.map((part, i) =>
-                    part.type === "text" ? (
-                      <span key={`${message.id}-${i}`} className="whitespace-pre-wrap">
-                        {part.text}
-                      </span>
-                    ) : null,
-                  )}
+                  {message.content || (isLoading ? "Thinking…" : "")}
                 </div>
               </div>
             ))}
-
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="rounded-2xl bg-background px-3.5 py-2 text-sm text-muted">
-                  Thinking…
-                </div>
-              </div>
-            )}
           </div>
 
           <form
