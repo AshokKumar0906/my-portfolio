@@ -59,9 +59,14 @@ export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
   const result = streamText({
-    model: google("gemini-3.7-flash"),
+    model: google("gemini-3.5-flash-lite"),
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
+    providerOptions: {
+      google: {
+        thinkingConfig: { thinkingLevel: "minimal" },
+      },
+    },
   });
 
   return createUIMessageStreamResponse({
