@@ -1,5 +1,4 @@
 import { profile, skills, experience, projects } from "@/lib/data";
-import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { href: "#about", label: "Skills", meta: `${skills.length}` },
@@ -32,16 +31,13 @@ export default function Nav() {
           </a>
         ))}
       </nav>
-      <div className="flex items-center gap-2">
-        <ThemeToggle />
-        <a
-          href={profile.links.resume}
-          download
-          className="rounded-full bg-ink px-4 py-2 text-xs font-medium text-ink-foreground transition-opacity hover:opacity-85"
-        >
-          Résumé ↓
-        </a>
-      </div>
+      <a
+        href={profile.links.resume}
+        download
+        className="rounded-full bg-ink px-4 py-2 text-xs font-medium text-ink-foreground transition-opacity hover:opacity-85"
+      >
+        Résumé ↓
+      </a>
     </header>
   );
 }
