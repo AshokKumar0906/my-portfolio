@@ -100,9 +100,12 @@ export default function AiChat() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-8 sm:right-8">
+    <div
+      className="fixed right-4 z-50 flex flex-col items-end gap-3 sm:right-8 sm:bottom-8"
+      style={{ bottom: "calc(1rem + env(safe-area-inset-bottom, 0px))" }}
+    >
       {open && (
-        <div className="flex h-[28rem] w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-xl sm:h-[32rem]">
+        <div className="flex h-[28rem] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-xl sm:h-[32rem]">
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
             <div>
               <p className="text-sm font-semibold">Ask about {profile.name.split(" ")[0]}</p>
@@ -181,10 +184,15 @@ export default function AiChat() {
 
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-ink-foreground shadow-lg transition-opacity hover:opacity-85"
+        aria-label={open ? "Close chat" : "Ask AI about me"}
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-ink-foreground shadow-lg transition-opacity hover:opacity-85 sm:h-auto sm:w-auto sm:gap-2 sm:px-5 sm:py-3 sm:text-sm sm:font-medium"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-        {open ? "Close" : "Ask AI about me"}
+        {open ? (
+          <span className="text-lg leading-none sm:hidden">✕</span>
+        ) : (
+          <span className="h-2 w-2 rounded-full bg-emerald-400 sm:h-1.5 sm:w-1.5" />
+        )}
+        <span className="hidden sm:inline">{open ? "Close" : "Ask AI about me"}</span>
       </button>
     </div>
   );
