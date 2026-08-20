@@ -6,7 +6,7 @@ from typing import List, Literal
 import httpx
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from calendar_tool import check_and_book
 from data import build_system_prompt
@@ -72,13 +72,19 @@ You can book a call directly on Ashok's calendar using the schedule_call tool. C
 """
 
 
+MAX_MESSAGES = 40
+MAX_MESSAGE_LENGTH = 4000
+
+
 class ChatMessage(BaseModel):
     role: Literal["user", "assistant"]
-    content: str
+    content: str = Field(max_length=MAX_MESSAGE_LENGTH)
 
 
 class ChatRequest(BaseModel):
-    messages: List[ChatMessage]
+    # Bounds the request so a single call can't drive unbounded Gemini
+    # token cost — a real conversation never gets close to these caps.
+    messages: List[ChatMessage] = Field(min_length=1, max_length=MAX_MESSAGES)
 
 
 def to_gemini_contents(messages: List[ChatMessage]) -> list[dict]:

@@ -22,6 +22,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ashok-kumar-l-portfolio.vercel.app"),
   title,
   description,
+  keywords: [
+    "Ashok Kumar L",
+    "AI Engineer",
+    "ML Engineer",
+    "Agentic AI",
+    "RAG",
+    "LLM fine-tuning",
+    "LangChain",
+    "LangGraph",
+    "FastAPI",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title,
     description,
