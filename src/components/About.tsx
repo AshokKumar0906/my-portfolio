@@ -64,16 +64,13 @@ export default function About() {
                   <button
                     onClick={() => toggleSkill(item)}
                     aria-expanded={expanded === item}
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors ${
+                    className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                       expanded === item
                         ? "border-accent text-accent"
                         : "border-border text-muted hover:border-accent/50 hover:text-accent"
                     }`}
                   >
                     {item}
-                    <span aria-hidden className="text-[10px] opacity-60">
-                      {expanded === item ? "−" : "?"}
-                    </span>
                   </button>
                 </li>
               ))}
