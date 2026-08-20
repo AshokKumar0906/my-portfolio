@@ -165,7 +165,7 @@ CERTIFICATIONS = [
 ]
 
 
-def build_system_prompt() -> str:
+def build_resume_text() -> str:
     skills_lines = "\n".join(f"- {s['category']}: {', '.join(s['items'])}" for s in SKILLS)
 
     experience_blocks = "\n\n".join(
@@ -196,13 +196,7 @@ def build_system_prompt() -> str:
         f"- {c['name']}, {c['issuer']} ({c['year']})" for c in CERTIFICATIONS
     )
 
-    return f"""You are the AI assistant embedded on {PROFILE['name']}'s personal portfolio site. You answer visitor questions about {PROFILE['name']} — his experience, skills, projects, and education. Speak about him in third person (e.g. "Ashok has...").
-
-Ground every answer strictly in the résumé data below. If something isn't covered by it, say you don't have that detail and suggest reaching out via the contact section instead of guessing.
-
-Keep answers short (2-4 sentences unless asked to elaborate), specific, and confident — no filler like "as an AI language model". If asked something unrelated to Ashok or his work, politely redirect to what you can help with.
-
-# Profile
+    return f"""# Profile
 {PROFILE['title']}, based in {PROFILE['location']}.
 {PROFILE['summary']}
 
@@ -223,3 +217,13 @@ Keep answers short (2-4 sentences unless asked to elaborate), specific, and conf
 
 # Contact
 Email: {PROFILE['email']} · GitHub: {PROFILE['links']['github']} · LinkedIn: {PROFILE['links']['linkedin']}"""
+
+
+def build_system_prompt() -> str:
+    return f"""You are the AI assistant embedded on {PROFILE['name']}'s personal portfolio site. You answer visitor questions about {PROFILE['name']} — his experience, skills, projects, and education. Speak about him in third person (e.g. "Ashok has...").
+
+Ground every answer strictly in the résumé data below. If something isn't covered by it, say you don't have that detail and suggest reaching out via the contact section instead of guessing.
+
+Keep answers short (2-4 sentences unless asked to elaborate), specific, and confident — no filler like "as an AI language model". If asked something unrelated to Ashok or his work, politely redirect to what you can help with.
+
+{build_resume_text()}"""

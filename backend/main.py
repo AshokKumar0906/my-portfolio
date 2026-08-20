@@ -4,12 +4,14 @@ from datetime import datetime, timedelta, timezone
 from typing import List, Literal
 
 import httpx
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from calendar_tool import check_and_book
 from data import build_system_prompt
+from jd_match import analyze_fit
+from skill_explain import explain_skill
 
 app = FastAPI()
 
@@ -203,3 +205,28 @@ async def stream_chat(messages: List[ChatMessage]):
 @app.post("/api/chat")
 async def chat(req: ChatRequest) -> StreamingResponse:
     return StreamingResponse(stream_chat(req.messages), media_type="text/event-stream")
+
+
+class JdMatchRequest(BaseModel):
+    job_description: str = Field(min_length=20, max_length=6000)
+
+
+@app.post("/api/jd-match")
+async def jd_match(req: JdMatchRequest) -> dict:
+    try:
+        return await analyze_fit(req.job_description)
+    except Exception:
+        raise HTTPException(status_code=502, detail="Couldn't analyze that job description. Please try again.")
+
+
+class SkillExplainRequest(BaseModel):
+    skill: str = Field(min_length=1, max_length=100)
+
+
+@app.post("/api/skill-explain")
+async def skill_explain(req: SkillExplainRequest) -> dict:
+    try:
+        explanation = await explain_skill(req.skill)
+        return {"explanation": explanation}
+    except Exception:
+        raise HTTPException(status_code=502, detail="Couldn't fetch an explanation. Please try again.")
