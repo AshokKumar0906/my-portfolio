@@ -47,8 +47,9 @@ export default function About() {
         architectures, and LLM fine-tuning, backed by an M.Sc. in Data
         Science and dual cloud certifications from Oracle and AWS.
       </p>
-      <p className="mb-6 text-xs text-muted">
-        Click any skill below to ask the AI how it&apos;s actually been used.
+      <p className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/5 px-3 py-1.5 text-xs text-accent">
+        <span aria-hidden>✨</span>
+        Click any skill below to ask the AI how it&apos;s actually been used
       </p>
 
       <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2">
@@ -63,13 +64,16 @@ export default function About() {
                   <button
                     onClick={() => toggleSkill(item)}
                     aria-expanded={expanded === item}
-                    className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors ${
                       expanded === item
                         ? "border-accent text-accent"
-                        : "border-border text-muted hover:border-foreground/30 hover:text-foreground"
+                        : "border-border text-muted hover:border-accent/50 hover:text-accent"
                     }`}
                   >
                     {item}
+                    <span aria-hidden className="text-[10px] opacity-60">
+                      {expanded === item ? "−" : "?"}
+                    </span>
                   </button>
                 </li>
               ))}

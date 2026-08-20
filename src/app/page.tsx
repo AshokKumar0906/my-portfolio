@@ -36,10 +36,10 @@ export default function Home() {
       </div>
       <main className="flex-1">
         <Hero />
+        <JdMatch />
         <About />
         <Experience />
         <Projects />
-        <JdMatch />
         <Education />
         <Contact />
       </main>

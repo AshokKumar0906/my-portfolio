@@ -1,10 +1,10 @@
 import { profile, skills, experience, projects } from "@/lib/data";
 
 const links = [
+  { href: "#jd-match", label: "Job Fit" },
   { href: "#about", label: "Skills", meta: `${skills.length}` },
   { href: "#experience", label: "Experience", meta: `${experience.length}` },
   { href: "#projects", label: "Projects", meta: `${projects.length}` },
-  { href: "#jd-match", label: "Job Fit" },
   { href: "#contact", label: "Contact" },
 ];
 
