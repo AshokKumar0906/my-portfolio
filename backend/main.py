@@ -10,7 +10,6 @@ from pydantic import BaseModel, Field
 
 from calendar_tool import check_and_book
 from data import build_system_prompt
-from jd_match import analyze_fit
 from skill_explain import explain_skill
 
 app = FastAPI()
@@ -205,18 +204,6 @@ async def stream_chat(messages: List[ChatMessage]):
 @app.post("/api/chat")
 async def chat(req: ChatRequest) -> StreamingResponse:
     return StreamingResponse(stream_chat(req.messages), media_type="text/event-stream")
-
-
-class JdMatchRequest(BaseModel):
-    job_description: str = Field(min_length=20, max_length=6000)
-
-
-@app.post("/api/jd-match")
-async def jd_match(req: JdMatchRequest) -> dict:
-    try:
-        return await analyze_fit(req.job_description)
-    except Exception:
-        raise HTTPException(status_code=502, detail="Couldn't analyze that job description. Please try again.")
 
 
 class SkillExplainRequest(BaseModel):
